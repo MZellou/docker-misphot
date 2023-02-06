@@ -1,0 +1,73 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="mission">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <!-- plain text : mission name -->
+        <xs:element name="image" type="imageType" maxOccurs="unbounded"/>
+        <xs:element name="scanner" type="xs:string" minOccurs="0"/> <!-- comma separated floats ? -->
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="imageType" mixed="true">
+    <xs:sequence>
+      <!-- plain text : image name -->
+      <xs:element name="parametres">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="resolution">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element type="xs:nonNegativeInteger" name="saisie"/>
+                  <xs:element type="xs:nonNegativeInteger" name="livraison"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:choice>
+              <xs:element name="etalement" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:nonNegativeInteger" name="noir"/>
+                    <xs:element type="xs:nonNegativeInteger" name="blanc"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:sequence>
+                <xs:element name="etalement-rouge" type="etalementType"/>
+                <xs:element name="etalement-vert" type="etalementType"/>
+                <xs:element name="etalement-bleu" type="etalementType"/>
+              </xs:sequence>
+            </xs:choice>
+            <xs:element name="exposition">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element type="xs:string" name="vitesse" minOccurs="0"/>
+                  <xs:element type="xs:string" name="diaphragme" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="sous-echantillonnage"/>
+            <xs:element name="taille">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element type="xs:nonNegativeInteger" name="lignes"/>
+                  <xs:element type="xs:nonNegativeInteger" name="colonnes"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="etalementType">
+    <xs:sequence>
+      <xs:element type="xs:nonNegativeInteger" name="low"/>
+      <xs:element type="xs:nonNegativeInteger" name="hight"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+
+

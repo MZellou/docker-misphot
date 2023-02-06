@@ -1,0 +1,5 @@
+name,credits,home,url,viewer,thumbnail,lowres,highres,iip
+'cliches','IGN','http://remonterletemps.ign.fr',,,,,,'https://wxs.ign.fr/{key}/iipsrv.fcgi?FIF=DEMAT.PVA/{rlt}_{image}.jp2'
+'archives_de_paris','Archives de Paris','http://archives.paris.fr/','http://archives.paris.fr/f/photos/{uri}/f/mosaique/?','http://archives.paris.fr/arkotheque/visionneuse/visionneuse.php?arko={arko}','http://archives.paris.fr/_depot_ad75/_depot_arko/basesdoc/1/{doc}/{image}.JPG','http://archives.paris.fr/_depot_ad75/_depot_arko/basesdoc/1/{doc}/vign{vign}_{image}.JPG',,
+'vergue','Vergue Paris','http://vergue.com/','http://vergue.com/post/{uri}','http://vergue.com/post/{uri}','http://vergue.com/media/.{image}_t.jpg','http://vergue.com/media/.{image}_s.jpg','http://vergue.com/media/{image}.jpg',
+'archives_nationales','Archives Nationales'’https://www.archives-nationales.culture.gouv.fr/’,,,,,,,

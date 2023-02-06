@@ -1,0 +1,454 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="TA" type="TAType"/>
+
+  <!-- entity types -->
+  <xs:complexType name="clicheType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="image"/>
+      <xs:element type="xs:string" name="origine"/> <!-- references 'system_sensor/sensor/origine' -->
+      <xs:element type="xs:nonNegativeInteger" name="nb_canaux" minOccurs="0"/>
+      <xs:element type="xs:nonNegativeInteger" name="number"/>
+      <xs:element type="xs:nonNegativeInteger" name="lot" minOccurs="0"/>
+      <xs:element name="modhs" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element type="xs:string" name="type"/>
+            <xs:element type="paramshsType" name="paramshs" maxOccurs="unbounded" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element type="xs:boolean" name="actif"/>
+      <xs:element type="xs:nonNegativeInteger" name="zi"/>
+      <xs:element type="xs:nonNegativeInteger" name="qualite"/>
+      <xs:element type="xs:string" name="note" minOccurs="0"/>
+      <xs:element type="xs:float" name="time" minOccurs="0"/>
+      <xs:element type="xs:float" name="sun_height" minOccurs="0"/>
+      <xs:element type="xs:float" name="pose" minOccurs="0"/>
+      <xs:element type="xs:float" name="tdi" minOccurs="0"/>
+      <xs:element type="xs:nonNegativeInteger" name="section" minOccurs="0"/>
+      <xs:element type="xs:boolean" name="nav_interpol" minOccurs="0"/>
+      <xs:element type="xs:integer" name="style"/>
+      <xs:element type="xs:float" name="resolution_moy"/>
+      <xs:element type="xs:float" name="resolution_min" minOccurs="0"/>
+      <xs:element type="xs:float" name="resolution_max" minOccurs="0"/>
+      <xs:element type="xs:float" name="overlap"/>
+      <xs:element type="xs:float" name="overlap_max" minOccurs="0"/>
+      <xs:element type="xs:float" name="overlap_min" minOccurs="0"/>
+      <xs:element type="polygon2dType" name="polygon2d" minOccurs="0"/>
+      <xs:element name="model" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element type="pt3dType" name="pt3d"/>
+            <xs:element type="pt4dType" name="quaternion"/>
+            <xs:element name="systbde" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element type="xs:nonNegativeInteger" name="Type"/>
+                  <xs:element type="xs:float" name="CylA"/>
+                  <xs:element type="xs:float" name="CylB"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element type="xs:boolean" name="lock"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element type="pt3d_Type" name="nadir"/>
+      <xs:element type="pt3d_Type" name="trajecto" minOccurs="0"/>
+      <xs:element name="indicator">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element type="xs:float" name="value"/>
+            <xs:element type="xs:string" name="type"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="platf_info" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element type="xs:float" name="B"/>
+            <xs:element type="xs:float" name="E"/>
+            <xs:element type="xs:float" name="D"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="bandeType">
+    <xs:sequence>
+      <xs:element type="xs:nonNegativeInteger" name="number"/>
+      <xs:element type="xs:nonNegativeInteger" name="axe"/>
+      <xs:element type="xs:boolean" name="actif"/>
+      <xs:element type="xs:float" name="trans"/>
+      <xs:element type="xs:float" name="kappa"/>
+      <xs:element type="xs:float" name="a" minOccurs="0"/>
+      <xs:element type="xs:float" name="b" minOccurs="0"/>
+      <xs:element type="xs:float" name="c" minOccurs="0"/>
+      <xs:element type="xs:nonNegativeInteger" name="nb_section" minOccurs="0"/>
+      <xs:element type="xs:float" name="altitude" minOccurs="0"/>
+      <xs:element type="xs:nonNegativeInteger" name="qualite"/>
+      <xs:element type="xs:string" name="note" minOccurs="0"/>
+      <xs:element type="xs:float" name="start_time" minOccurs="0"/>
+      <xs:element type="xs:float" name="end_time" minOccurs="0"/>
+      <xs:element type="clicheType" name="cliche" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="xs:nonNegativeInteger" name="nb_cli_declare" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sensorType">
+    <xs:sequence>
+      <xs:element type="xs:boolean" name="actif"/>
+      <xs:element type="xs:string" name="avion"/>
+      <xs:element type="xs:float" name="omega"/>
+      <xs:element type="xs:float" name="phi"/>
+      <xs:element type="xs:float" name="kappa"/>
+      <xs:element type="xs:float" name="refraction"/>
+      <xs:element type="xs:nonNegativeInteger" name="trappe"/>
+      <xs:element type="pt3d_Type" name="rattachement_antenne"/>
+      <xs:element name="sensor">
+       <xs:complexType>
+         <xs:sequence>
+            <xs:element type="xs:string" name="name"/>
+            <xs:element type="xs:string" name="objectif"/>
+            <xs:element type="xs:string" name="origine"/>
+            <xs:element type="xs:float" name="argentique"/>
+            <xs:element type="xs:string" name="calibration-date" minOccurs="0"/>
+            <xs:element type="xs:string" name="serial-number" minOccurs="0"/>
+            <xs:element type="rect_Type" name="usefull-frame"/>
+            <xs:element name="dark-frame">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element type="rectType" name="rect"/>
+                  <xs:element type="xs:string" name="apply-zone" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element type="defectType" name="defect" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="pt3d_Type" name="focal"/>
+            <xs:choice minOccurs="0">
+              <xs:element type="doublegridType" name="doublegrid"/>
+              <xs:element type="distortionType" name="distortion"/>
+            </xs:choice>
+            <xs:element type="xs:float" name="pixel_size"/>
+            <xs:element type="xs:float" name="orientation"/>
+            <xs:element type="xs:float" name="scan_width" minOccurs="0"/>
+            <xs:element type="radiometryType" name="radiometry" minOccurs="0"/>
+            <xs:element type="xs:string" name="file_origine" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="volType">
+    <xs:sequence>
+      <xs:element type="xs:nonNegativeInteger" name="number"/>
+      <xs:element type="xs:string" name="logname" minOccurs="0"/>
+      <xs:element type="xs:string" name="mission"/>
+      <xs:element type="xs:string" name="date"/>
+      <xs:element type="xs:boolean" name="actif"/>
+      <xs:element type="xs:nonNegativeInteger" name="qualite"/>
+      <xs:element type="xs:string" name="note" minOccurs="0"/>
+      <xs:element type="bandeType" name="bande" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="sensorType" name="system_sensor" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="infosMto" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="obsMto" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="chantierType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="nom"/>
+      <xs:element type="xs:string" name="projection"/>
+      <xs:element type="xs:string" name="MNT"/>
+      <xs:element type="xs:float" name="Z0"/>
+      <xs:element type="xs:float" name="derive"/>
+      <xs:element type="xs:float" name="overlap"/>
+      <xs:element type="xs:float" name="sidelap"/>
+      <xs:element type="xs:float" name="resolution"/>
+      <xs:element type="xs:float" name="overlap_delta"/>
+      <xs:element type="xs:float" name="sidelap_delta"/>
+      <xs:element type="xs:float" name="resolution_delta"/>
+      <xs:element type="xs:float" name="sun_height_min"/>
+      <xs:element type="xs:string" name="reference_alti"/>
+      <xs:element type="xs:float" name="zi"/>
+      <xs:element type="centre_rep_localType" name="centre_rep_local" minOccurs="0"/>
+      <xs:element type="xs:string" name="apx_origine" minOccurs="0"/>
+      <xs:element type="xs:string" name="nom_generique"/>
+      <xs:element type="xs:string" name="designation"/>
+      <xs:element type="xs:string" name="numero_SAA"/>
+      <xs:element type="xs:string" name="theme"/>
+      <xs:element type="xs:string" name="theme_geographique"/>
+      <xs:element type="xs:string" name="commanditaire"/>
+      <xs:element type="xs:string" name="producteur"/>
+      <xs:element type="xs:string" name="style"/>
+      <xs:element type="xs:string" name="emulsion"/>
+      <xs:element type="xs:string" name="support"/>
+      <xs:element type="xs:string" name="qualite"/>
+      <xs:element type="xs:nonNegativeInteger" name="annee_debut"/>
+      <xs:element type="xs:string" name="note"/>
+      <xs:element type="xs:float" name="qualite_pva"/>
+      <xs:element type="lotType" name="lot" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="volType" name="vol" maxOccurs="unbounded" minOccurs="0">
+        <!--
+        key [' Camera25 '] duplicated in 2004_FD%2044-56_C_80.xml, 2008_FD%2009_C_68.xml and 2008_FD%2051_C_68.xml
+        <xs:key name="sensorKey">
+          <xs:selector xpath="system_sensor/sensor"/>
+          <xs:field xpath="origine"/>
+        </xs:key>
+        <xs:keyref name="sensorKeyRef" refer="sensorKey">
+          <xs:selector xpath="bande/cliche"/>
+          <xs:field xpath="origine"/>
+        </xs:keyref>  
+        -->
+      </xs:element>
+      <xs:element type="contourType" name="poly_contour" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TAType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="process-version" minOccurs="0"/>
+      <xs:element type="xs:string" name="process-date" minOccurs="0"/>
+      <xs:element type="chantierType" name="chantier"/>
+      <xs:element type="xs:float" name="resolution"/>
+      <xs:element type="xs:nonNegativeInteger" name="context" minOccurs="0"/>
+      <xs:element type="xs:string" name="redori"/>
+      <xs:element type="xs:string" name="folder" minOccurs="0"/>
+      <xs:element type="ta_preparationType" name="ta_preparation" minOccurs="0"/>
+      <xs:element name="info_chantier" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element type="info_missionType" name="info_mission" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- geometric types -->
+  <xs:complexType name="pt2dType">
+    <xs:sequence>
+      <xs:element type="xs:float" name="x"/>
+      <xs:element type="xs:float" name="y"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pt3dType">
+    <xs:sequence>
+      <xs:element type="xs:float" name="x"/>
+      <xs:element type="xs:float" name="y"/>
+      <xs:element type="xs:float" name="z"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pt4dType">
+    <xs:sequence>
+      <xs:element type="xs:float" name="x"/>
+      <xs:element type="xs:float" name="y"/>
+      <xs:element type="xs:float" name="z"/>
+      <xs:element type="xs:float" name="w"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rectType">
+    <xs:sequence>
+      <xs:element type="xs:float" name="x"/>
+      <xs:element type="xs:float" name="y"/>
+      <xs:element type="xs:float" name="w"/>
+      <xs:element type="xs:float" name="h"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="polygon2dType">
+    <xs:sequence>
+      <xs:element type="xs:boolean" name="hole" minOccurs="0" default="0"/>
+      <xs:element type="xs:nonNegativeInteger" name="nb_pt"/>
+      <xs:sequence maxOccurs="unbounded" minOccurs="3">
+        <xs:element type="xs:float" name="x"/>
+        <xs:element type="xs:float" name="y"/>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="contourType">
+    <xs:sequence>
+      <xs:element type="polygon2dType" name="contour" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- wrapper types -->
+  <xs:complexType name="pt3d_Type">
+    <xs:sequence>
+      <xs:element type="pt3dType" name="pt3d"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rect_Type">
+    <xs:sequence>
+      <xs:element type="rectType" name="rect"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="grid_Type">
+    <xs:sequence>
+      <xs:element type="gridType" name="grid"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- cliche types -->
+  <xs:complexType name="paramshsType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="channel"/>
+      <xs:element type="xs:float" name="k"/>
+      <xs:element type="xs:float" name="e"/>
+      <xs:element type="xs:float" name="a"/>
+      <xs:element type="xs:float" name="hsmin"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- sensor types -->
+  <xs:complexType name="defectType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="type"/>
+      <xs:element type="rectType" name="rect"/>
+      <xs:element type="xs:float" name="value"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="radiometryType">
+    <xs:sequence>
+      <xs:element name="whitebalance">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element type="xs:string" name="canal"/>
+            <xs:element type="xs:float" name="wb_coef"/>
+            <xs:element type="xs:string" name="origine_ref"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- sensor distortion types -->
+  <xs:complexType name="distortionType">
+    <xs:sequence>
+      <xs:element type="pt2dType" name="pt2d"/>
+      <xs:element type="xs:float" name="r3"/>
+      <xs:element type="xs:float" name="r5"/>
+      <xs:element type="xs:float" name="r7"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="doublegridType">
+    <xs:sequence>
+      <xs:element type="grid_Type" name="grid_directe"/>
+      <xs:element type="grid_Type" name="grid_inverse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gridType">
+    <xs:sequence>
+      <xs:element type="pt2dType" name="origine"/>
+      <xs:element type="pt2dType" name="step"/>
+      <xs:element type="xs:byte" name="StepIsAdapted"/>
+      <xs:element name="filename">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element type="xs:string" name="x"/>
+            <xs:element type="xs:string" name="y"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element type="pt2dType" name="size"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- vol types -->
+  <xs:complexType name="obsMtoType">
+    <xs:sequence>
+      <xs:element type="xs:float" name="time"/>
+      <xs:element type="xs:byte" name="nebulosite"/>
+      <xs:element type="xs:float" name="visibilite"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- chantier types -->
+  <xs:complexType name="centre_rep_localType">
+    <xs:sequence>
+      <xs:element type="pt2dType" name="pt2d"/>
+      <xs:element type="xs:string" name="proj"/>
+      <xs:element type="xs:string" name="projTopAero"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="parametresType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="channel"/>
+      <xs:element type="xs:float" name="niveau_max"/>
+      <xs:element type="xs:float" name="gamma"/>
+      <xs:element type="xs:float" name="voile"/>
+      <xs:element type="xs:float" name="min_out"/>
+      <xs:element type="xs:float" name="max_out"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rgbparamsType">
+    <xs:sequence>
+      <xs:element type="parametresType" name="parametres" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ParamsModeleBlocType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="channel"/>
+      <xs:element type="xs:float" name="A"/>
+      <xs:element type="xs:float" name="B"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ModeleBlocType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="TypeModeleBloc"/>
+      <xs:element type="ParamsModeleBlocType" name="ParamsModeleBloc" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="lotType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="name"/>
+      <xs:element type="xs:string" name="type_gamma"/>
+      <xs:element type="xs:byte" name="rand_conversion"/>
+      <xs:element type="xs:byte" name="reference"/>
+      <xs:element type="rgbparamsType" name="rgbparams"/>
+      <xs:element type="ModeleBlocType" name="ModeleBloc"/>
+      <xs:element type="xs:byte" name="apply"/>
+      <xs:element type="xs:byte" name="visible"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- TA types -->
+  <xs:complexType name="numpt2dType">
+    <xs:sequence>
+      <xs:element type="xs:nonNegativeInteger" name="num"/>
+      <xs:element type="pt2dType" name="pt2d"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ta_sequenceType">
+    <xs:sequence>
+      <xs:element type="xs:nonNegativeInteger" name="axe"/>
+      <xs:element type="xs:float" name="altitude" minOccurs="0"/>
+      <xs:element type="xs:nonNegativeInteger" name="nbcli"/>
+      <xs:element type="numpt2dType" name="start"/>
+      <xs:element type="numpt2dType" name="end"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ta_preparationType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="projection"/>
+      <xs:element type="contourType" name="poly_contour"/>
+      <xs:element type="ta_sequenceType" name="ta_sequence" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="info_missionType">
+    <xs:sequence>
+      <xs:element type="xs:nonNegativeInteger" name="type"/>
+      <xs:element type="xs:string" name="date"/>
+      <xs:element type="xs:string" name="heure"/>
+      <xs:element type="xs:string" name="info"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+
+

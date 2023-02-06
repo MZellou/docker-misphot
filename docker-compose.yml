@@ -1,0 +1,46 @@
+# docker-compose build
+version: '3.9'
+volumes:
+  dbbackups:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/media/store-dai/pocs/misphot/dbbackups/'
+  postgis-data:
+
+services:
+  db:
+    image: kartoza/postgis:15-3.3
+    volumes:
+      - postgis-data:/var/lib/postgresql
+      - dbbackups:/backups
+    environment:
+      # If you need to create multiple database you can add coma separated databases eg gis,data
+      - POSTGRES_DB=gis
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASS=${POSTGRES_PASS}
+      - ALLOW_IP_RANGE=0.0.0.0/0
+      # Add extensions you need to be enabled by default in the DB. Default are the five specified below
+      - POSTGRES_MULTIPLE_EXTENSIONS=postgis,hstore,postgis_topology,postgis_raster,pgrouting
+    ports:
+      - "49158:5432"
+    restart: on-failure
+    healthcheck:
+      test: "PGPASSWORD=$POSTGRES_PASS pg_isready -h 127.0.0.1 -U $POSTGRES_USER -d gis"
+
+  dbbackups:
+    image: kartoza/pg-backup:15-3.3
+    hostname: pg-backups
+    volumes:
+      - dbbackups:/backups
+    environment:
+      - DUMPPREFIX=PG_db
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASS=${POSTGRES_PASS}
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=db
+    restart: on-failure
+    depends_on:
+      db:
+        condition: service_healthy
